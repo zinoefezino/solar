@@ -20,8 +20,7 @@ export default function Hero() {
           </h1>
 
           <p className="mt-6 text-lg text-green/70 max-w-md">
-            Custom solar and inverter systems designed, installed, and
-            maintained for reliable power: rain, shine, or grid outage.
+            Solar power and battery storage for homes and businesses.
           </p>
 
           <div className="mt-9 flex flex-wrap items-center gap-4">

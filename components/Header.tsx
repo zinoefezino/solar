@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
   Menu01Icon,
   Cancel01Icon,
   Call02Icon,
+  ArrowRight01Icon,
 } from "@hugeicons/core-free-icons";
 
 const navLinks = [
@@ -20,6 +21,11 @@ const navLinks = [
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // lock body scroll while the side panel is open
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+  }, [menuOpen]);
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-black/5">
@@ -73,53 +79,70 @@ export default function Header() {
         </div>
       </div>
 
-      {menuOpen && (
-        <div className="fixed inset-0 z-50 bg-white lg:hidden">
-          <div className="mx-auto max-w-7xl px-6 h-20 flex items-center justify-between">
-            <span className="text-xl font-semibold text-green">
-              Solstice<span className="text-amber">Power</span>
-            </span>
-            <button
-              onClick={() => setMenuOpen(false)}
-              aria-label="Close menu"
-              className="text-green"
-            >
-              <HugeiconsIcon icon={Cancel01Icon} size={28} />
-            </button>
-          </div>
-          <nav className="flex flex-col gap-1 px-6 mt-4">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-                className="text-2xl font-medium text-green py-4 border-b border-black/5"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-          <div className="px-6 mt-8 flex flex-col gap-4">
-            <a
-              href="tel:+2340000000000"
-              className="flex items-center gap-2 text-green text-lg"
-            >
-              <HugeiconsIcon
-                icon={Call02Icon}
-                size={22}
-                className="text-amber"
-              />
-              +234 000 000 0000
-            </a>
-            <Link
-              href="/contact"
-              className="bg-green text-white text-center text-[15px] font-medium px-5 py-3.5 rounded-full"
-            >
-              Get a Free Quote
-            </Link>
-          </div>
+      {/* Backdrop */}
+      <div
+        className={`fixed inset-0 z-40 lg:hidden transition-opacity duration-300 ${
+          menuOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        } bg-black/30 backdrop-blur-sm`}
+        onClick={() => setMenuOpen(false)}
+      />
+
+      {/* Side panel — glass effect, slides in from the right */}
+      <div
+        className={`fixed top-0 right-0 z-50 h-full w-[82%] max-w-sm lg:hidden
+        bg-white/70 backdrop-blur-xl border-l border-white/40 shadow-2xl
+        transition-transform duration-300 ease-out
+        ${menuOpen ? "translate-x-0" : "translate-x-full"}`}
+      >
+        <div className="flex items-center justify-between h-20 px-6 border-b border-black/5">
+          <span className="text-lg font-semibold text-green">
+            Solstice<span className="text-amber">Power</span>
+          </span>
+          <button
+            onClick={() => setMenuOpen(false)}
+            aria-label="Close menu"
+            className="text-green"
+          >
+            <HugeiconsIcon icon={Cancel01Icon} size={26} />
+          </button>
         </div>
-      )}
+
+        <nav className="flex flex-col px-6 mt-4">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => setMenuOpen(false)}
+              className="flex items-center justify-between text-lg font-medium text-green py-4 border-b border-black/5"
+            >
+              {link.label}
+              <HugeiconsIcon
+                icon={ArrowRight01Icon}
+                size={18}
+                className="text-green/40"
+              />
+            </Link>
+          ))}
+        </nav>
+
+        <div className="px-6 mt-8 flex flex-col gap-4">
+          <a
+            href="tel:+2340000000000"
+            className="flex items-center gap-2 text-green"
+          >
+            <HugeiconsIcon icon={Call02Icon} size={20} className="text-amber" />
+            +234 000 000 0000
+          </a>
+          <Link
+            href="/contact"
+            className="bg-green text-white text-center text-[15px] font-medium px-5 py-3.5 rounded-full"
+          >
+            Get a Free Quote
+          </Link>
+        </div>
+      </div>
     </header>
   );
 }

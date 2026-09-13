@@ -14,7 +14,7 @@ const packages = [
     icon: Home01Icon,
     description:
       "A compact system for apartments and small homes that need lights, fans, and essentials covered.",
-    price: "From ₦1,850,000",
+    price: "From $1,850",
     highlight: false,
     includes: [
       "3 to 5 kW solar array",
@@ -28,7 +28,7 @@ const packages = [
     icon: Home02Icon,
     description:
       "Full home coverage with stronger storage so you stay powered through longer outages.",
-    price: "From ₦3,450,000",
+    price: "From $3,450",
     highlight: true,
     includes: [
       "5 to 8 kW solar array",
@@ -42,7 +42,7 @@ const packages = [
     icon: Building02Icon,
     description:
       "Scaled systems for shops, offices, and clinics that cannot afford downtime.",
-    price: "From ₦7,500,000",
+    price: "From $7,500",
     highlight: false,
     includes: [
       "Custom commercial sizing",
